@@ -1,0 +1,80 @@
+can you remake this code totaly?
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Solution to task</title>
+        <!-- Lets prepare some styles -->
+        <style>
+            body {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+            .container {
+                width: 100px;
+                height: 100px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border: 1px solid #17218d;
+                background-color: #a9afe8;
+                margin: 5px;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <script>
+            //fitrst lets define body
+            const body = document.querySelector("body");
+
+            // add divs now
+            for (let i = 1; i <= 100; i++) {
+                const div = createDiv(i);
+                body.appendChild(div);
+            }
+
+            //setting up our divs
+            function createDiv(i) {
+                const div = document.createElement("div");
+                div.setAttribute("id", `${i}`);
+                div.setAttribute("clicked", "false");
+                div.innerText = `DIV ${i}`;
+                div.classList.add("container");
+                div.addEventListener("click", setElement);
+
+                return div;
+            }
+
+            // adding function to handle moving
+            function setElement(e) {
+                const movedEl = e.target.dataset.clicked === "false";
+                const element = e.target;
+                element.remove();
+
+                // change position of the element
+                if (movedEl) {
+                    element.setAttribute("clicked", "true");
+                    body.insertAdjacentElement("afterbegin", element);
+                } else {
+                    element.setAttribute("clicked", "false");
+
+                    if (element.id === "0") {
+                        body.insertAdjacentElement("afterbegin", element);
+                    } else {
+                        const startPosition = document.getElementById(
+                            `${Number(e.target.id) - 1}`
+                        );
+                        startPosition.insertAdjacentElement(
+                            "afterend",
+                            element
+                        );
+                    }
+                }
+            }
+        </script>
+    </body>
+</html>
